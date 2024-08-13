@@ -21,7 +21,7 @@ export default function Home() {
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <nav className="container mx-auto p-6 flex justify-between items-center">
           <div className="flex items-center">
-            <Image src="/logo.svg" alt="HMS Logo" width={40} height={40} />
+            <Image src="/logo.png" alt="HMS Logo" width={40} height={40} />
             <span className="text-2xl font-bold text-blue-600 ml-2">MediCare HMS</span>
           </div>
           <div className="space-x-6">
