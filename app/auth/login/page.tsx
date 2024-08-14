@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { login } from '@/utils/api';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -24,7 +25,6 @@ export default function Login() {
       await login(username, password);
       if (rememberMe) {
         // Implement remember me functionality
-        // For example, set a cookie or use localStorage
       }
       router.push('/dashboard');
     } catch (err) {
@@ -33,54 +33,53 @@ export default function Login() {
       setIsLoading(false);
     }
   };
-  return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <Head>
-        <title>Login | Hospital Management System</title>
-      </Head>
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
-        </h2>
-      </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <Head>
+        <title>Login | MediCare Plus</title>
+      </Head>
+      <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-6xl w-full flex flex-col md:flex-row">
+        {/* Left side - Logo and Description */}
+        <div className="bg-indigo-600 text-white p-8 md:w-1/2 flex flex-col justify-center items-center text-center">
+          <Image src="/login2.webp" alt="MediCare Plus Logo" width={200} height={150} className="mb-8" />
+          <h1 className="text-4xl font-bold mb-4">MediCare Plus</h1>
+          <p className="text-xl mb-6">Advanced Medical Management System</p>
+          <p className="text-sm opacity-75">Empowering healthcare professionals with cutting-edge technology for seamless patient care and efficient hospital management.</p>
+        </div>
+
+        {/* Right side - Login Form */}
+        <div className="p-8 md:w-1/2">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Sign in to your account</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                Username
-              </label>
-              <div className="mt-1">
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                           focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                           focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              />
             </div>
 
             <div className="flex items-center justify-between">
@@ -93,11 +92,8 @@ export default function Login() {
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">Remember me</label>
               </div>
-
               <div className="text-sm">
                 <Link href="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
@@ -113,26 +109,18 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out disabled:opacity-50"
               >
                 {isLoading ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
           </form>
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {/* Add social login buttons here if needed */}
-            </div>
+          <div className="mt-6 text-center text-sm text-gray-600">
+            Don't have an account?{' '}
+            <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+              Register here
+            </Link>
           </div>
         </div>
       </div>
