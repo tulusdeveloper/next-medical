@@ -1,7 +1,5 @@
 // app/layout.tsx
-
 import React from 'react';
-// import Sidebar from '../components/sidebar/Sidebar';
 import Sidebar from "@/components/sidebar/Sidebar";
 
 interface LayoutProps {
