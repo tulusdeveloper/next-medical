@@ -12,7 +12,6 @@ import {
 } from 'react-icons/fa';
 import LogoutModal from '@/components/logout/LogoutModal';
 import { logout } from '@/utils/api';
-import Tooltip from '@/components/tooltip/Tooltip';
 
 const menuItems = [
   { name: 'Dashboard', icon: FaChartBar, href: '/dashboard' },
@@ -65,7 +64,7 @@ const Sidebar: React.FC = () => {
 
       <aside
         className={`
-          bg-white ${isCollapsed ? 'w-20' : 'w-64'} min-h-screen p-4 fixed left-0 top-0 z-10 transition-all duration-300 ease-in-out
+          bg-white ${isCollapsed ? 'w-16' : 'w-56'} min-h-screen p-4 fixed left-0 top-0 z-10 transition-all duration-300 ease-in-out shadow-lg
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0 lg:static
         `}
@@ -73,7 +72,7 @@ const Sidebar: React.FC = () => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center justify-center">
             <img src="/medical-logo.png" alt="Logo" className={`h-8 transition-all duration-300 ${isCollapsed ? 'hidden' : 'block'}`} />
-            {!isCollapsed && <span className="text-xl font-semibold ml-2">MediCare Pro</span>}
+            {!isCollapsed && <span className="text-lg font-semibold ml-2">MediCare Pro</span>}
           </div>
           <button
             onClick={toggleCollapse}
@@ -87,36 +86,26 @@ const Sidebar: React.FC = () => {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
+              className={`flex items-center p-2 rounded-md transition-colors duration-200 ${
                 pathname === item.href
-                  ? 'bg-blue-100 text-blue-600'
+                  ? 'bg-blue-600 text-white'
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
               onClick={() => setIsOpen(false)}
             >
               <item.icon className="text-lg" />
               {!isCollapsed && <span className="ml-3 text-sm font-medium">{item.name}</span>}
-              {isCollapsed && (
-                <Tooltip content={item.name}>
-                  <span></span>
-                </Tooltip>
-              )}
             </Link>
           ))}
         </nav>
         <button
-          className={`flex items-center p-2 mt-6 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200 w-full ${
+          className={`flex items-center p-2 mt-6 text-red-600 hover:bg-red-100 rounded-md transition-colors duration-200 w-full ${
             isCollapsed ? 'justify-center' : ''
           }`}
           onClick={() => setIsLogoutModalOpen(true)}
         >
           <FaSignOutAlt className="text-lg" />
           {!isCollapsed && <span className="ml-3 text-sm font-medium">Logout</span>}
-          {isCollapsed && (
-            <Tooltip content="Logout">
-              <span></span>
-            </Tooltip>
-          )}
         </button>
       </aside>
 
