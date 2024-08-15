@@ -1,16 +1,18 @@
 // components/sidebar/Sidebar.tsx
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   FaChartBar, FaCalendarAlt, FaUserInjured, FaClipboardList,
   FaFileInvoiceDollar, FaUserMd, FaFlask, FaBed, FaAmbulance,
-  FaPills, FaNotesMedical, FaCog, FaBars, FaTimes, FaSignOutAlt
+  FaPills, FaNotesMedical, FaCog, FaBars, FaTimes, FaSignOutAlt,
+  FaChevronLeft, FaChevronRight
 } from 'react-icons/fa';
 import LogoutModal from '@/components/logout/LogoutModal';
 import { logout } from '@/utils/api';
+import Tooltip from '@/components/tooltip/Tooltip';
 
 const menuItems = [
   { name: 'Dashboard', icon: FaChartBar, href: '/dashboard' },
@@ -30,9 +32,18 @@ const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      router.push('/auth/login');
+    }
+  }, [router]);
+
   const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
   const handleLogout = async () => {
     try {
@@ -45,7 +56,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <>
-      {/* Mobile toggle button */}
       <button
         className="fixed top-4 left-4 z-20 lg:hidden bg-blue-500 text-white p-2 rounded-md"
         onClick={toggleSidebar}
@@ -53,15 +63,24 @@ const Sidebar: React.FC = () => {
         {isOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-      {/* Sidebar */}
-      <aside className={`
-        bg-white w-64 min-h-screen p-4 fixed left-0 top-0 z-10 transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        lg:translate-x-0 lg:static
-      `}>
-        <div className="flex items-center justify-center mb-8">
-          <img src="/logo.png" alt="Logo" className="h-8" />
-          <span className="text-xl font-semibold ml-2">MediCare Pro</span>
+      <aside
+        className={`
+          bg-white ${isCollapsed ? 'w-20' : 'w-64'} min-h-screen p-4 fixed left-0 top-0 z-10 transition-all duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          lg:translate-x-0 lg:static
+        `}
+      >
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-center">
+            <img src="/medical-logo.png" alt="Logo" className={`h-8 transition-all duration-300 ${isCollapsed ? 'hidden' : 'block'}`} />
+            {!isCollapsed && <span className="text-xl font-semibold ml-2">MediCare Pro</span>}
+          </div>
+          <button
+            onClick={toggleCollapse}
+            className="text-gray-700 hover:text-gray-900"
+          >
+            {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
+          </button>
         </div>
         <nav className="space-y-2">
           {menuItems.map((item) => (
@@ -75,21 +94,32 @@ const Sidebar: React.FC = () => {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <item.icon className="mr-3 text-lg" />
-              <span className="text-sm font-medium">{item.name}</span>
+              <item.icon className="text-lg" />
+              {!isCollapsed && <span className="ml-3 text-sm font-medium">{item.name}</span>}
+              {isCollapsed && (
+                <Tooltip content={item.name}>
+                  <span></span>
+                </Tooltip>
+              )}
             </Link>
           ))}
         </nav>
         <button
-          className="flex items-center p-2 mt-6 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200"
+          className={`flex items-center p-2 mt-6 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200 w-full ${
+            isCollapsed ? 'justify-center' : ''
+          }`}
           onClick={() => setIsLogoutModalOpen(true)}
         >
-          <FaSignOutAlt className="mr-3 text-lg" />
-          <span className="text-sm font-medium">Logout</span>
+          <FaSignOutAlt className="text-lg" />
+          {!isCollapsed && <span className="ml-3 text-sm font-medium">Logout</span>}
+          {isCollapsed && (
+            <Tooltip content="Logout">
+              <span></span>
+            </Tooltip>
+          )}
         </button>
       </aside>
 
-      {/* Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-0 lg:hidden"
@@ -97,7 +127,6 @@ const Sidebar: React.FC = () => {
         />
       )}
 
-      {/* Logout Modal */}
       <LogoutModal
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
