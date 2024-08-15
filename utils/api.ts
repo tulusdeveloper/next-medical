@@ -22,14 +22,14 @@ export const login = async (username: string, password: string) => {
   try {
     const response = await api.post('/api/token/', { username, password });
     const { access, refresh } = response.data;
-    
+
     // Store both access and refresh tokens
     localStorage.setItem('accessToken', access);
     localStorage.setItem('refreshToken', refresh);
-    
+
     // Set the default Authorization header for future requests
     api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-    
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
