@@ -1,4 +1,4 @@
-// pages/login.tsx
+// app/auth/login.tsx
 "use client";
 
 import { useState } from 'react';
@@ -24,16 +24,21 @@ export default function Login() {
     try {
       await login(username, password);
       if (rememberMe) {
-        // Implement remember me functionality
+        // Implement remember me functionality if needed
+        // For example, you could store a flag in localStorage
+        localStorage.setItem('rememberMe', 'true');
       }
       router.push('/dashboard');
     } catch (err) {
-      setError('Invalid credentials. Please try again.');
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <Head>
@@ -63,7 +68,7 @@ export default function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
-                           focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                           focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-slate-800"
               />
             </div>
 
@@ -78,7 +83,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
-                           focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                           focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-slate-800"
               />
             </div>
 
