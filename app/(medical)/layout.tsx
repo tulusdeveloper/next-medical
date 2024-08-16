@@ -1,5 +1,6 @@
-// app/layout.tsx
-import React from 'react';
+"use client"
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Sidebar from "@/components/sidebar/Sidebar";
 
 interface LayoutProps {
@@ -7,6 +8,15 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      router.push('/auth/login');
+    }
+  }, [router]);
+
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
