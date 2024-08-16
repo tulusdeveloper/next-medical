@@ -16,7 +16,7 @@ import { logout } from '@/utils/api';
 const menuItems = [
   { name: 'Dashboard', icon: FaChartBar, href: '/dashboard' },
   { name: 'Appointments', icon: FaCalendarAlt, href: '/home/appointments' },
-  { name: 'Patients', icon: FaUserInjured, href: '/patients' },
+  { name: 'Patients', icon: FaUserInjured, href: '/home/patients' },
   { name: 'Doctors', icon: FaUserMd, href: '/doctors' },
   { name: 'Lab Results', icon: FaFlask, href: '/lab-results' },
   { name: 'Admissions', icon: FaBed, href: '/admissions' },
