@@ -1,6 +1,6 @@
 // utils/withAuthClient.tsx
+"use client";
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { ComponentType } from 'react';
 
@@ -8,21 +8,30 @@ export function withAuthClient<P extends JSX.IntrinsicAttributes>(
   WrappedComponent: ComponentType<P>
 ): NextPage<P> {
   const WithAuthClient: NextPage<P> = (props) => {
-    const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-      const checkAuth = async () => {
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken) {
-          router.push('/auth/login');
-        } else {
-          setIsAuthenticated(true);
-        }
-      };
+      setIsClient(true);
+      
+      if (typeof window !== 'undefined') {
+        const checkAuth = async () => {
+          const accessToken = localStorage.getItem('accessToken');
+          if (!accessToken) {
+            // Dynamically import 'next/router' to avoid using it before client-side rendering
+            const { default: router } = await import('next/router');
+            router.push('/auth/login');
+          } else {
+            setIsAuthenticated(true);
+          }
+        };
+        checkAuth();
+      }
+    }, []);
 
-      checkAuth();
-    }, [router]);
+    if (!isClient) {
+      return null; // or a loading component
+    }
 
     if (!isAuthenticated) {
       return <div>Loading...</div>; // Or a more sophisticated loading component
