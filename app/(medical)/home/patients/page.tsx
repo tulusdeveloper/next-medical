@@ -35,8 +35,8 @@ const PatientsPage: React.FC = () => {
   if (error) return <div className="text-center py-4 text-red-500 font-semibold">Error: {error}</div>;
 
   return (
-    <div className="p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Patients</h1>
+    <div className="p-8 bg-gray-50 shadow-lg rounded-lg">
+      <h1 className="text-4xl font-bold mb-8 text-gray-800">Patients</h1>
       <CreatePatientForm onPatientCreated={handlePatientCreated} />
       <PatientList patients={patients} onPatientUpdated={fetchPatients} />
     </div>

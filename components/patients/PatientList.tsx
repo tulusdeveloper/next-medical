@@ -10,7 +10,7 @@ interface PatientListProps {
 
 const PatientList: React.FC<PatientListProps> = ({ patients, onPatientUpdated }) => {
   return (
-    <div className="mt-6 space-y-4">
+    <div className="mt-8 space-y-6">
       {patients.map((patient) => (
         <PatientItem key={patient.id} patient={patient} onPatientUpdated={onPatientUpdated} />
       ))}
@@ -19,3 +19,4 @@ const PatientList: React.FC<PatientListProps> = ({ patients, onPatientUpdated })
 };
 
 export default PatientList;
+
