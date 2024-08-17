@@ -51,26 +51,19 @@ const InsurancePage: React.FC = () => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
 
-    if (feedbackMessage) {
+    if (feedbackMessage || errorMessage) {
       timeoutId = setTimeout(() => {
         setFeedbackMessage(null);
-      }, 3000); // Timeout for 3 seconds
-    }
-
-    if (errorMessage) {
-      timeoutId = setTimeout(() => {
         setErrorMessage(null);
-      }, 3000); // Timeout for 3 seconds
+      }, 3000);
     }
 
     return () => clearTimeout(timeoutId);
   }, [feedbackMessage, errorMessage]);
 
   const handleEdit = (insurance: Insurance) => {
-    if (insurance) {
-      setSelectedInsurance(insurance);
-      setShowModal(true);
-    }
+    setSelectedInsurance(insurance);
+    setShowModal(true);
   };
 
   const handleCreate = () => {
@@ -86,13 +79,11 @@ const InsurancePage: React.FC = () => {
   const handleInsuranceUpdated = (updatedInsurance: Insurance | undefined) => {
     if (updatedInsurance) {
       if (selectedInsurance) {
-        // Update existing insurance
         setInsurances((prev) =>
           prev.map((ins) => (ins.id === updatedInsurance.id ? updatedInsurance : ins))
         );
         setFeedbackMessage("Insurance updated successfully!");
       } else {
-        // Add new insurance
         setInsurances((prev) => [...prev, updatedInsurance]);
         setFeedbackMessage("Insurance created successfully!");
       }
@@ -112,31 +103,26 @@ const InsurancePage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Insurance Management</h1>
-      {feedbackMessage && (
-        <div className="mb-4 p-2 bg-green-100 text-green-700 border border-green-400 rounded">
-          {feedbackMessage}
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Insurance Management</h1>
+      {(feedbackMessage || errorMessage) && (
+        <div className={`mb-4 p-3 rounded-lg ${feedbackMessage ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {feedbackMessage || errorMessage}
         </div>
       )}
-      {errorMessage && (
-        <div className="mb-4 p-2 bg-red-100 text-red-700 border border-red-400 rounded">
-          {errorMessage}
-        </div>
-      )}
-      <div className="mb-4 flex gap-4 items-center">
+      <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search insurances..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 rounded-lg flex-grow"
         />
         <button
           onClick={handleCreate}
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition duration-200"
+          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 w-full sm:w-auto"
         >
-          Add Insurance
+          Add New Insurance
         </button>
       </div>
       <InsuranceList

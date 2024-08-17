@@ -35,71 +35,63 @@ const InsuranceList: React.FC<InsuranceListProps> = ({
     }
   };
 
+  const renderSortIcon = (field: keyof Insurance) => {
+    if (sortField === field) {
+      return sortOrder === "asc" ? "↑" : "↓";
+    }
+    return null;
+  };
+
   return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Insurance List</h2>
+    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <h2 className="text-2xl font-bold text-gray-800 p-6">Insurance List</h2>
       {insurances.length === 0 ? (
-        <p className="text-gray-500">No insurance records found.</p>
+        <p className="text-gray-500 p-6">No insurance records found.</p>
       ) : (
-        <table className="min-w-full border border-gray-300">
-          <thead className="bg-gray-200">
-            <tr>
-              <th
-                onClick={() => handleSort("id")}
-                className="cursor-pointer p-2 text-gray-600 font-bold"
-              >
-                ID {sortField === "id" && (sortOrder === "asc" ? "↑" : "↓")}
-              </th>
-              <th
-                onClick={() => handleSort("name")}
-                className="cursor-pointer p-2 text-gray-600 font-bold"
-              >
-                Name {sortField === "name" && (sortOrder === "asc" ? "↑" : "↓")}
-              </th>
-              <th
-                onClick={() => handleSort("policy_number")}
-                className="cursor-pointer p-2 text-gray-600 font-bold"
-              >
-                Policy Number {sortField === "policy_number" && (sortOrder === "asc" ? "↑" : "↓")}
-              </th>
-              <th
-                onClick={() => handleSort("coverage_details")}
-                className="cursor-pointer p-2 text-gray-600 font-bold"
-              >
-                Coverage Details {sortField === "coverage_details" && (sortOrder === "asc" ? "↑" : "↓")}
-              </th>
-              <th className="p-2 text-gray-600 font-bold">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {insurances.map((insurance) => (
-              <tr key={insurance.id} className="bg-white border-b border-gray-300 hover:bg-gray-50">
-                <td className="p-2 text-gray-800">{insurance.id}</td>
-                <td className="p-2 text-gray-800">{insurance.name}</td>
-                <td className="p-2 text-gray-800">{insurance.policy_number}</td>
-                <td className="p-2 text-gray-800">{insurance.coverage_details}</td>
-                <td className="p-2">
-                  <button
-                    onClick={() => onEdit(insurance)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-100">
+              <tr>
+                {["id", "name", "policy_number", "coverage_details"].map((field) => (
+                  <th
+                    key={field}
+                    onClick={() => handleSort(field as keyof Insurance)}
+                    className="cursor-pointer p-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
                   >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (insurance.id !== undefined) {
-                        confirmDelete(insurance.id);
-                      }
-                    }}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
+                    {field.replace("_", " ")} {renderSortIcon(field as keyof Insurance)}
+                  </th>
+                ))}
+                <th className="p-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {insurances.map((insurance) => (
+                <tr key={insurance.id} className="hover:bg-gray-50 transition-colors duration-200">
+                  <td className="p-4 whitespace-nowrap text-sm text-gray-700">{insurance.id}</td>
+                  <td className="p-4 whitespace-nowrap text-sm text-gray-700">{insurance.name}</td>
+                  <td className="p-4 whitespace-nowrap text-sm text-gray-700">{insurance.policy_number}</td>
+                  <td className="p-4 text-sm text-gray-700">{insurance.coverage_details}</td>
+                  <td className="p-4 whitespace-nowrap text-sm font-medium">
+                    <button
+                      onClick={() => onEdit(insurance)}
+                      className="text-indigo-600 hover:text-indigo-900 mr-4 transition-colors duration-200"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => insurance.id !== undefined && confirmDelete(insurance.id)}
+                      className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
