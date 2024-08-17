@@ -1,7 +1,7 @@
 // components/patients/EditPatientForm.tsx
-"use client"
-import React, { useState } from 'react';
-import { patientApi, Patient } from '@/utils/patientApi';
+"use client";
+import React, { useState } from "react";
+import { patientApi, Patient } from "@/utils/patientApi";
 
 interface EditPatientFormProps {
   patient: Patient;
@@ -26,7 +26,7 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({
       await patientApi.updatePatient(patient.id!, formData);
       onPatientUpdated();
     } catch (error) {
-      console.error('Failed to update patient:', error);
+      console.error("Failed to update patient:", error);
     }
   };
 
@@ -115,8 +115,19 @@ const EditPatientForm: React.FC<EditPatientFormProps> = ({
         required
       />
       <div className="flex space-x-4 mt-4">
-        <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Update Patient</button>
-        <button type="button" onClick={onCancel} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancel</button>
+        <button
+          type="submit"
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex-1"
+        >
+          Update Patient
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 flex-1"
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

@@ -5,18 +5,23 @@ import PatientItem from './PatientItem';
 
 interface PatientListProps {
   patients: Patient[];
+  onEditPatient: (patient: Patient) => void;
   onPatientUpdated: () => void;
 }
 
-const PatientList: React.FC<PatientListProps> = ({ patients, onPatientUpdated }) => {
+const PatientList: React.FC<PatientListProps> = ({ patients, onEditPatient, onPatientUpdated }) => {
   return (
     <div className="mt-8 space-y-6">
       {patients.map((patient) => (
-        <PatientItem key={patient.id} patient={patient} onPatientUpdated={onPatientUpdated} />
+        <PatientItem
+          key={patient.id}
+          patient={patient}
+          onEditPatient={onEditPatient}
+          onPatientUpdated={onPatientUpdated}
+        />
       ))}
     </div>
   );
 };
 
 export default PatientList;
-
