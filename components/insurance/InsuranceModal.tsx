@@ -5,15 +5,20 @@ import insuranceApi, { Insurance } from "@/utils/insuranceApi";
 interface InsuranceModalProps {
   insurance: Insurance | null;
   onClose: () => void;
-  onInsuranceUpdated: (updatedInsurance: Insurance) => void;
+  onInsuranceUpdated: (insurance: Insurance | undefined) => void;
 }
 
-const InsuranceModal: React.FC<InsuranceModalProps> = ({ insurance, onClose, onInsuranceUpdated }) => {
-  const [formData, setFormData] = useState<Omit<Insurance, "id">>({
+const InsuranceModal: React.FC<InsuranceModalProps> = ({
+  insurance,
+  onClose,
+  onInsuranceUpdated,
+}) => {
+  const [formData, setFormData] = useState({
     name: "",
     policy_number: "",
     coverage_details: "",
   });
+  const [modalFeedbackMessage, setModalFeedbackMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (insurance) {
@@ -36,12 +41,15 @@ const InsuranceModal: React.FC<InsuranceModalProps> = ({ insurance, onClose, onI
 
       if (insurance) {
         updatedInsurance = await insuranceApi.updateInsurance(insurance.id!, formData);
+        setModalFeedbackMessage("Insurance updated successfully!");
       } else {
         updatedInsurance = await insuranceApi.createInsurance(formData);
+        setModalFeedbackMessage("Insurance created successfully!");
       }
 
       onInsuranceUpdated(updatedInsurance);
     } catch (error) {
+      setModalFeedbackMessage("Failed to save insurance.");
       console.error(error);
     }
   };
@@ -52,6 +60,11 @@ const InsuranceModal: React.FC<InsuranceModalProps> = ({ insurance, onClose, onI
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
           {insurance ? "Edit Insurance" : "Create Insurance"}
         </h2>
+        {modalFeedbackMessage && (
+          <div className="mb-4 p-2 bg-green-100 text-green-700 border border-green-400 rounded">
+            {modalFeedbackMessage}
+          </div>
+        )}
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold mb-2">Name</label>
           <input
