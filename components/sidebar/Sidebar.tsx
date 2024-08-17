@@ -5,9 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  FaChartBar, FaCalendarAlt, FaUserInjured, FaClipboardList,
-  FaFileInvoiceDollar, FaUserMd, FaFlask, FaBed, FaAmbulance,
-  FaPills, FaNotesMedical, FaCog, FaBars, FaTimes, FaSignOutAlt,
+  FaChartBar, FaCalendarAlt, FaUserInjured, FaCog, FaBars, FaTimes, FaSignOutAlt,
   FaChevronLeft, FaChevronRight
 } from 'react-icons/fa';
 import LogoutModal from '@/components/logout/LogoutModal';
@@ -15,16 +13,10 @@ import { logout } from '@/utils/api';
 
 const menuItems = [
   { name: 'Dashboard', icon: FaChartBar, href: '/dashboard' },
-  { name: 'Appointments', icon: FaCalendarAlt, href: '/home/appointments' },
   { name: 'Patients', icon: FaUserInjured, href: '/home/patients' },
-  { name: 'Doctors', icon: FaUserMd, href: '/doctors' },
-  { name: 'Lab Results', icon: FaFlask, href: '/lab-results' },
-  { name: 'Admissions', icon: FaBed, href: '/admissions' },
-  { name: 'Emergency', icon: FaAmbulance, href: '/emergency' },
-  { name: 'Pharmacy', icon: FaPills, href: '/pharmacy' },
-  { name: 'Medical Records', icon: FaNotesMedical, href: '/medical-records' },
-  { name: 'Billing', icon: FaFileInvoiceDollar, href: '/billing' },
-  { name: 'Settings', icon: FaCog, href: '/settings' },
+  { name: 'Appointments', icon: FaCalendarAlt, href: '/home/appointments' },
+  { name: 'Administration', icon: FaCog, href: '/home/administration' },
+  { name: 'insurance', icon: FaCog, href: '/home/insurance' },
 ];
 
 const Sidebar: React.FC = () => {
@@ -70,10 +62,15 @@ const Sidebar: React.FC = () => {
         `}
       >
         <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center justify-center">
-            <img src="/medical-logo.png" alt="Logo" className={`h-8 transition-all duration-300 ${isCollapsed ? 'hidden' : 'block'}`} />
-            {!isCollapsed && <span className="text-lg font-semibold ml-2">MediCare Pro</span>}
-          </div>
+        <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-start'}`}>
+  <img src="/logo.png" alt="Logo" className={`h-8 transition-all duration-300 ${isCollapsed ? 'block mx-auto' : 'block'}`} />
+  {!isCollapsed && (
+    <span className="text-xl font-bold ml-3 text-gray-900">
+      MediCare Pro
+    </span>
+  )}
+</div>
+
           <button
             onClick={toggleCollapse}
             className="text-gray-700 hover:text-gray-900"
