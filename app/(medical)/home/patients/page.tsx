@@ -4,15 +4,14 @@ import React, { useState, useEffect } from "react";
 import { withAuthClient } from "@/utils/withAuthClient";
 import { patientApi, Patient } from "@/utils/patientApi";
 import PatientList from "@/components/patients/PatientList";
-import CreatePatientForm from "@/components/patients/CreatePatientForm";
+import PatientForm from "@/components/patients/PatientForm";
 import Modal from "@/components/patients/Modal";
-import EditPatientForm from "@/components/patients/EditPatientForm";
 
 const PatientsPage: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
   useEffect(() => {
@@ -31,13 +30,9 @@ const PatientsPage: React.FC = () => {
     }
   };
 
-  const handlePatientCreated = () => {
+  const handlePatientSubmitted = () => {
     fetchPatients();
-    setIsCreateModalOpen(false);
-  };
-
-  const handlePatientUpdated = () => {
-    fetchPatients();
+    setIsModalOpen(false);
     setSelectedPatient(null);
   };
 
@@ -46,7 +41,7 @@ const PatientsPage: React.FC = () => {
       <h1 className="text-4xl font-bold mb-8 text-gray-800">Patients</h1>
       {error && <div className="text-center py-4 text-red-500 font-semibold">Error: {error}</div>}
       <button
-        onClick={() => setIsCreateModalOpen(true)}
+        onClick={() => setIsModalOpen(true)}
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Add New Patient
@@ -56,21 +51,25 @@ const PatientsPage: React.FC = () => {
       ) : (
         <PatientList
           patients={patients}
-          onEditPatient={setSelectedPatient}
-          onPatientUpdated={handlePatientUpdated}
+          onEditPatient={(patient) => {
+            setSelectedPatient(patient);
+            setIsModalOpen(true);
+          }}
+          onPatientUpdated={fetchPatients}
         />
       )}
-      <Modal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} title="Create Patient">
-        <CreatePatientForm onPatientCreated={handlePatientCreated} />
-      </Modal>
-      <Modal isOpen={!!selectedPatient} onClose={() => setSelectedPatient(null)} title="Edit Patient">
-        {selectedPatient && (
-          <EditPatientForm
-            patient={selectedPatient}
-            onPatientUpdated={handlePatientUpdated}
-            onCancel={() => setSelectedPatient(null)}
-          />
-        )}
+      <Modal isOpen={isModalOpen} onClose={() => {
+        setIsModalOpen(false);
+        setSelectedPatient(null);
+      }} title={selectedPatient ? "Edit Patient" : "Create Patient"}>
+        <PatientForm
+          patient={selectedPatient || undefined}
+          onSubmit={handlePatientSubmitted}
+          onCancel={() => {
+            setIsModalOpen(false);
+            setSelectedPatient(null);
+          }}
+        />
       </Modal>
     </div>
   );
