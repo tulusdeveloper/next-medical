@@ -12,14 +12,23 @@ interface PatientFormProps {
 const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState<Partial<Patient>>({
     first_name: "",
+    other_names: "",
     last_name: "",
     gender: "M",
     date_of_birth: "",
+    national_id: "",
     primary_phone: "",
+    secondary_phone: "",
+    email: "",
     address: "",
     next_of_kin_name: "",
     next_of_kin_contact: "",
     next_of_kin_relationship: "",
+    blood_type: "",
+    allergies: "",
+    chronic_conditions: "",
+    is_active: true,
+    referral_source: "",
   });
 
   useEffect(() => {
@@ -28,8 +37,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
     }
   }, [patient]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,9 +59,217 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-2 gap-6">
-        {/* Form fields go here (same as in your original CreatePatientForm and EditPatientForm) */}
-        {/* ... */}
+      <div className="grid grid-cols-3 gap-6">
+        <div className="space-y-1">
+          <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">First Name</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value={formData.first_name || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="other_names" className="block text-sm font-medium text-gray-700">Other Names</label>
+          <input
+            type="text"
+            id="other_names"
+            name="other_names"
+            value={formData.other_names || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">Last Name</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value={formData.last_name || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender || "M"}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+          </select>
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="date_of_birth" className="block text-sm font-medium text-gray-700">Date of Birth</label>
+          <input
+            type="date"
+            id="date_of_birth"
+            name="date_of_birth"
+            value={formData.date_of_birth || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="national_id" className="block text-sm font-medium text-gray-700">National ID</label>
+          <input
+            type="text"
+            id="national_id"
+            name="national_id"
+            value={formData.national_id || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="primary_phone" className="block text-sm font-medium text-gray-700">Primary Phone</label>
+          <input
+            type="tel"
+            id="primary_phone"
+            name="primary_phone"
+            value={formData.primary_phone || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="secondary_phone" className="block text-sm font-medium text-gray-700">Secondary Phone</label>
+          <input
+            type="tel"
+            id="secondary_phone"
+            name="secondary_phone"
+            value={formData.secondary_phone || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={formData.address || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="next_of_kin_name" className="block text-sm font-medium text-gray-700">Next of Kin Name</label>
+          <input
+            type="text"
+            id="next_of_kin_name"
+            name="next_of_kin_name"
+            value={formData.next_of_kin_name || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="next_of_kin_contact" className="block text-sm font-medium text-gray-700">Next of Kin Contact</label>
+          <input
+            type="tel"
+            id="next_of_kin_contact"
+            name="next_of_kin_contact"
+            value={formData.next_of_kin_contact || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="next_of_kin_relationship" className="block text-sm font-medium text-gray-700">Next of Kin Relationship</label>
+          <input
+            type="text"
+            id="next_of_kin_relationship"
+            name="next_of_kin_relationship"
+            value={formData.next_of_kin_relationship || ""}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="blood_type" className="block text-sm font-medium text-gray-700">Blood Type</label>
+          <input
+            type="text"
+            id="blood_type"
+            name="blood_type"
+            value={formData.blood_type || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="allergies" className="block text-sm font-medium text-gray-700">Allergies</label>
+          <textarea
+            id="allergies"
+            name="allergies"
+            value={formData.allergies || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="chronic_conditions" className="block text-sm font-medium text-gray-700">Chronic Conditions</label>
+          <textarea
+            id="chronic_conditions"
+            name="chronic_conditions"
+            value={formData.chronic_conditions || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="referral_source" className="block text-sm font-medium text-gray-700">Referral Source</label>
+          <input
+            type="text"
+            id="referral_source"
+            name="referral_source"
+            value={formData.referral_source || ""}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="is_active" className="flex items-center">
+            <input
+              type="checkbox"
+              id="is_active"
+              name="is_active"
+              checked={formData.is_active || false}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            <span className="text-sm font-medium text-gray-700">Is Active</span>
+          </label>
+        </div>
       </div>
 
       <div className="flex gap-4">
