@@ -28,7 +28,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const response = await axios.post(`${API_BASE_URL}/api/token/refresh/`, {
+        const response = await axios.post(`${API_BASE_URL}token/refresh/`, {
           refresh: refreshToken,
         });
         const { access } = response.data;
@@ -47,7 +47,7 @@ api.interceptors.response.use(
 
 export const login = async (username: string, password: string) => {
   try {
-    const response = await api.post('/api/token/', { username, password });
+    const response = await api.post('token/', { username, password });
     const { access, refresh } = response.data;
 
     // Store both access and refresh tokens
@@ -80,7 +80,7 @@ export const logout = () => {
 
 export const verifyToken = async () => {
   try {
-    const response = await api.post('/api/token/verify/');
+    const response = await api.post('token/verify/');
     return response.data;
   } catch (error) {
     throw new Error('Invalid token');
@@ -90,7 +90,7 @@ export const verifyToken = async () => {
 export const refreshToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/token/refresh/`, {
+    const response = await axios.post(`${API_BASE_URL}token/refresh/`, {
       refresh: refreshToken,
     });
     const { access } = response.data;

@@ -129,7 +129,7 @@ const CreatePatientForm: React.FC<CreatePatientFormProps> = ({ onPatientCreated 
         className="w-full p-2 border border-gray-300 rounded"
         required
       />
-      <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Create Patient</button>
+     <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full">Create Patient</button>
     </form>
   );
 };
