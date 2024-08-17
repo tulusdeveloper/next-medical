@@ -1,7 +1,7 @@
 // components/patients/PatientList.tsx
-import React from 'react';
-import { Patient } from '@/utils/patientApi';
-import PatientItem from './PatientItem';
+import React from "react";
+import { Patient } from "@/utils/patientApi";
+import PatientItem from "./PatientItem";
 
 interface PatientListProps {
   patients: Patient[];
