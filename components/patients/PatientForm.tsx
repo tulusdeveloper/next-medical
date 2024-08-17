@@ -69,7 +69,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.first_name || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -80,7 +80,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="other_names"
             value={formData.other_names || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -92,7 +92,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.last_name || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -103,7 +103,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.gender || "M"}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           >
             <option value="M">Male</option>
             <option value="F">Female</option>
@@ -119,7 +119,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.date_of_birth || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -130,7 +130,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="national_id"
             value={formData.national_id || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -142,7 +142,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.primary_phone || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -153,7 +153,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="secondary_phone"
             value={formData.secondary_phone || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -164,7 +164,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="email"
             value={formData.email || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -176,7 +176,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.address || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -188,7 +188,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.next_of_kin_name || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -200,7 +200,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.next_of_kin_contact || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -212,7 +212,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             value={formData.next_of_kin_relationship || ""}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -223,7 +223,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="blood_type"
             value={formData.blood_type || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -233,7 +233,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="allergies"
             value={formData.allergies || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -243,7 +243,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="chronic_conditions"
             value={formData.chronic_conditions || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">
@@ -254,7 +254,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ patient, onSubmit, onCancel }
             name="referral_source"
             value={formData.referral_source || ""}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-800"
           />
         </div>
         <div className="space-y-1">

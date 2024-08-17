@@ -2,6 +2,7 @@
 "use client";
 import React from "react";
 import { Patient, patientApi } from "@/utils/patientApi";
+import { PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 
 interface PatientItemProps {
   patient: Patient;
@@ -13,8 +14,10 @@ const PatientItem: React.FC<PatientItemProps> = ({ patient, onEditPatient, onPat
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete patient ${patient.first_name} ${patient.last_name}?`)) {
       try {
-        await patientApi.deletePatient(patient.id!);
-        onPatientUpdated();
+        if (patient.id) {
+          await patientApi.deletePatient(patient.id);
+          onPatientUpdated();
+        }
       } catch (error) {
         alert("Failed to delete patient. Please try again.");
         console.error("Failed to delete patient:", error);
@@ -23,25 +26,40 @@ const PatientItem: React.FC<PatientItemProps> = ({ patient, onEditPatient, onPat
   };
 
   return (
-    <div className="p-6 border border-gray-300 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
-      <h3 className="text-2xl font-semibold mb-2">{`${patient.first_name} ${patient.last_name}`}</h3>
-      <p className="text-gray-600 mb-1">Date of Birth: {patient.date_of_birth}</p>
-      <p className="text-gray-600 mb-1">Gender: {patient.gender}</p>
-      <div className="mt-4 flex space-x-3">
+    <tr>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="flex items-center">
+          <div className="ml-4">
+            <div className="text-sm font-medium text-gray-900">
+              {patient.last_name ?? ''}, {patient.first_name ?? ''}
+            </div>
+            <div className="text-sm text-gray-500">{patient.primary_phone ?? 'N/A'}</div>
+          </div>
+        </div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <div className="text-sm text-gray-900">{patient.date_of_birth ?? 'N/A'}</div>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap">
+        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+          {patient.gender === 'M' ? 'Male' : patient.gender === 'F' ? 'Female' : 'Other'}
+        </span>
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         <button
           onClick={() => onEditPatient(patient)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300"
+          className="text-indigo-600 hover:text-indigo-900 mr-4"
         >
-          Edit
+          <PencilIcon className="h-5 w-5" />
         </button>
         <button
           onClick={handleDelete}
-          className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition duration-300"
+          className="text-red-600 hover:text-red-900"
         >
-          Delete
+          <TrashIcon className="h-5 w-5" />
         </button>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 
